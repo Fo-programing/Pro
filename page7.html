@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>مواعيد الدروس حسب الصف</title>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+            background: linear-gradient(to right, #fffaf0, #fde5b3);
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+      font-size: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .box {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 30px 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      color: #2c3e50;
+    }
+
+    .box:hover {
+      background-color: #eafaf1;
+      transform: translateY(-5px);
+    }
+
+    .popup {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background-color: #fff;
+      padding: 25px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    .btn {
+      margin: 5px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-close {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .btn-contact {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .btn-next {
+      background-color: #3498db;
+      color: white;
+      width: 200px;
+      font-size: 18px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-next:hover {
+      background-color: #2980b9;
+    }
+
+    .next-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>مواعيد الدروس حسب الصف</h1>
+
+<div class="grid" id="gradesGrid"></div>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h2 id="popupTitle">جدول مواعيد</h2>
+    <div id="scheduleTableContainer"></div>
+    <button class="btn btn-close" onclick="closePopup()">إغلاق</button>
+    <a class="btn btn-contact" href="https://wa.me/201123961290" target="_blank">تواصل</a>
+  </div>
+</div>
+
+<!-- زر التالي -->
+<div class="next-container">
+  <button class="btn-next" onclick="goToCode()">العوده</button>
+</div>
+
+<script>
+  const grades = [
+    "الصف الأول الابتدائي", "الصف الثاني الابتدائي", "الصف الثالث الابتدائي",
+    "الصف الرابع الابتدائي", "الصف الخامس الابتدائي", "الصف السادس الابتدائي",
+    "الصف الأول الإعدادي", "الصف الثاني الإعدادي", "الصف الثالث الإعدادي",
+    "الصف الأول الثانوي", "الصف الثاني الثانوي", "الصف الثالث الثانوي"
+  ];
+
+  const gradeSchedules = {
+    "الصف الأول الابتدائي": {
+      "السبت": "3:00 مساءً",
+      "الأحد": "4:00 مساءً",
+      "الاثنين": "_",
+      "الثلاثاء": "2:00 مساءً",
+      "الأربعاء": "_",
+      "الخميس": "6:00 مساءً",
+      "الجمعة": "_"
+    },
+    "الصف الثاني الابتدائي": {
+      "السبت": "1:30 مساءً",
+      "الأحد": "_",
+      "الاثنين": "3:30 مساءً",
+      "الثلاثاء": "_",
+      "الأربعاء": "4:00 مساءً",
+      "الخميس": "5:00 مساءً",
+      "الجمعة": "_"
+    }
+    // ✳️ يمكنك إضافة باقي الصفوف هنا...
+  };
+
+  const grid = document.getElementById('gradesGrid');
+  const popup = document.getElementById('popup');
+  const popupTitle = document.getElementById('popupTitle');
+  const scheduleTableContainer = document.getElementById('scheduleTableContainer');
+
+  grades.forEach(grade => {
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.innerText = grade;
+    box.onclick = () => {
+      const schedule = gradeSchedules[grade];
+      if (!schedule) {
+        scheduleTableContainer.innerHTML = `<p>لا يوجد جدول مضاف لهذا الصف بعد.</p>`;
+      } else {
+        scheduleTableContainer.innerHTML = generateScheduleTable(schedule);
+      }
+      popupTitle.innerText = `جدول مواعيد ${grade}`;
+      popup.style.display = 'flex';
+    };
+    grid.appendChild(box);
+  });
+
+  function generateScheduleTable(schedule) {
+    let html = `<table><tr><th>اليوم</th><th>الوقت</th></tr>`;
+    for (let day in schedule) {
+      html += `<tr><td>${day}</td><td>${schedule[day]}</td></tr>`;
+    }
+    html += `</table>`;
+    return html;
+  }
+
+  function closePopup() {
+    popup.style.display = 'none';
+  }
+
+  function goToCode() {
+    window.location.href = "home.html";
+  }
+</script>
+
+</body>
+</html>

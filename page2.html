@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>الحضور والغياب</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500&display=swap');
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to right, #fffaf0, #fde5b3);
+      margin: 0;
+      padding: 0;
+    }
+
+   header {
+      background-color: #4a90e2;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 24px;
+      position: relative;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 20px;
+      width: 80px;
+      height: 20px;
+      font-size: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: white;
+      color: #4a90e2;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .student-name {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #2c3e50;
+    }
+
+    .day-card {
+      background-color: #fdfdfd;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .day-card:hover {
+      transform: scale(1.02);
+    }
+
+    .status {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .present {
+      color: green;
+    }
+
+    .absent {
+      color: red;
+    }
+
+    .no-status {
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    سجل الحضور والغياب
+    <a class="back-btn" href="home.html">الرجوع</a>
+  </header>
+
+  <div class="container">
+    <div class="student-name">
+      الطالب: <span id="studentName">جارٍ التحميل...</span>
+    </div>
+    <div id="attendanceList"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const studentId = localStorage.getItem("studentId");
+    const student = students[studentId];
+
+    const studentNameEl = document.getElementById("studentName");
+    const attendanceList = document.getElementById("attendanceList");
+
+    if (student) {
+      studentNameEl.textContent = student.name;
+
+      for (const [day, status] of Object.entries(student.attendance)) {
+        const card = document.createElement("div");
+        card.className = "day-card";
+
+        const dayLabel = document.createElement("div");
+        dayLabel.textContent = day;
+
+        const statusEl = document.createElement("div");
+        statusEl.className = "status";
+
+        if (status === "حاضر") {
+          statusEl.textContent = "✔️ حاضر";
+          statusEl.classList.add("present");
+        } else if (status === "غائب") {
+          statusEl.textContent = "❌ غائب";
+          statusEl.classList.add("absent");
+        } else {
+          statusEl.textContent = "-";
+          statusEl.classList.add("no-status");
+        }
+
+        card.appendChild(dayLabel);
+        card.appendChild(statusEl);
+        attendanceList.appendChild(card);
+      }
+    } else {
+      studentNameEl.textContent = "بيانات الطالب غير موجودة.";
+    }
+  </script>
+
+</body>
+</html>

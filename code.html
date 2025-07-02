@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>واجهة التحقق</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to right, #fffaf0, #fde5b3);
+    }
+    .speech-bubble {
+      width: 340px;
+      margin-bottom: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .text {
+      font-size: 24px;
+      color: #5a3921;
+      margin-bottom: 16px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .code-input {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .code-input input {
+      width: 230px;
+      height: 20px;
+      margin: 4px;
+      font-size: 16px;
+      text-align: center;
+      border: 1.5px solid #c59d5f;
+      border-radius: 10px;
+      outline: none;
+      padding: 8px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .button {
+      padding: 12px 25px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #d4a82c;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .button:hover {
+      background-color: #f3bc42;
+      transform: translateY(-2px);
+    }
+  </style>
+  <script>
+    // التحقق من إذا كان المستخدم مسجل مسبقًا
+    const existingStudent = localStorage.getItem('studentData');
+    if (existingStudent) {
+      window.location.href = 'home.html';
+    }
+  </script>
+</head>
+<body>
+
+  <img src="https://media.istockphoto.com/id/1446793318/photo/cartoon-style-book-3d-rendering.jpg?s=612x612&w=0&k=20&c=FTbsUZrkYjIgbp3xrEh4wo3n-KaFD0nhQauo2dcFOYo=" alt="فقاعة الكلام" class="speech-bubble">
+  <div class="text">ادخل الكود</div>
+
+  <div class="code-input">
+    <input type="text" placeholder="أدخل الكود" id="codeInput" maxlength="6">
+    <input type="tel" placeholder="رقم هاتف ولي الأمر" maxlength="11" id="phoneInput">
+  </div>
+
+  <button class="button" onclick="verifyCode()">تسجيل</button>
+
+  <script src="data.js"></script>
+  <script>
+    function verifyCode() {
+      const code = document.getElementById('codeInput').value.trim();
+      const phone = document.getElementById('phoneInput').value.trim();
+
+      if (!/^01[0-9]{9}$/.test(phone)) {
+        alert('رقم الهاتف يجب أن يكون 11 رقماً ويبدأ بـ 01');
+        return;
+      }
+
+      if (students[code]) {
+        const student = students[code];
+        if (student.phone === phone) {
+          localStorage.setItem('studentData', JSON.stringify(student));
+          localStorage.setItem('studentId', code);
+          window.location.href = 'home.html';
+        } else {
+          alert('رقم الهاتف غير صحيح!');
+        }
+      } else {
+        alert('الكود غير صحيح! الرجاء المحاولة مرة أخرى.');
+      }
+    }
+  </script>
+</body>
+</html>

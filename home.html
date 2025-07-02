@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VD.C Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+            background: linear-gradient(to right, #fffaf0, #fde5b3);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden; /* يمنع التمرير الأفقي */
+    }
+
+    /* إخفاء شريط التمرير */
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .logo h1 {
+      color: orange;
+      font-size: 25px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      margin: 0;
+    }
+
+    .icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .icons i {
+      font-size: 24px;
+      color: #555;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .icons i:hover {
+      color: orange;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .container {
+        margin-bottom: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background-color: #f9f9f9;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .container:hover {
+      transform: scale(1.03);
+      background-color: #ffeccc;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .container img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+      transition: 0.3s;
+    }
+
+    .container h1 {
+      font-size: 18px;
+      color: #333;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        grid-template-columns: repeat(2, 1fr); /* يظل عمودين حتى على الموبايل */
+      }
+
+      .logo h1 {
+        font-size: 20px;
+      }
+
+      .icons i {
+        font-size: 20px;
+      }
+    }
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      right: 0px;
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #ffffff;
+      padding: 10px 0;
+    }
+    .bottom-menu i :hover{
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">
+        <div><strong id="studentName"></strong></div>
+    </div>
+    <div class="icons">
+  <i class="fa fa-user" onclick="window.location.href='user.html'"></i>
+  <i class="fa fa-cog" onclick="window.location.href='setting.html'"></i>
+
+    </div>
+  </div>
+
+ <div class="content">
+  <a href="exam.html" class="container"><img src="https://media.istockphoto.com/id/1347679582/photo/checklist-with-3-correct-points-and-1-incorrect-point-and-pencil-3d-rendering-illustration.jpg?s=612x612&w=0&k=20&c=9cOFPVsSohbeHJ20_8VPD2BqI9-EgigeYsUc_WVPo7g=" alt=""><h1>الإمتحانات</h1></a>
+
+  <a href="page2.html" class="container"><img src="https://media.istockphoto.com/id/1402307939/photo/3d-illustration-of-smiling-african-american-man-david-standing-confusedly-to-choose-yes-or-no.jpg?s=612x612&w=0&k=20&c=x16mbYAUzpk1KmXkuAH7hTwqppLNy1edzIp5FlVBxSY=" alt=""><h1>الغياب والحضور</h1></a>
+  
+  <a href="mony.html" class="container"><img src="https://media.istockphoto.com/id/2161935871/photo/modern-3d-rendering-showing-the-simplicity-and-security-of-credit-card-payments-with-credit.jpg?s=612x612&w=0&k=20&c=NclRFf5tpEa8FR9gzia05cq_4ux7W4DTteSKiM0LD-I=" alt=""><h1>مصاريف الشهر</h1></a>
+  
+  <a href="page4.html" class="container"><img src="https://media.istockphoto.com/id/1754230186/photo/3d-illustration-of-smiling-businessman-qadir-happy-energetic-woman-working-on-computer-in.jpg?s=612x612&w=0&k=20&c=R2DLRSQ7MX1s-TNW6OyNByMlZKqD7_SvAL6dJNQrLTE=" alt=""><h1>المستوي</h1></a>
+      
+  <a href="page7.html" class="container"><img src="https://media.istockphoto.com/id/1456566769/photo/maintenance-and-website-setting-configure-web-repair-website-setting-3d-illustration.jpg?s=612x612&w=0&k=20&c=AhJFF1paujVYNuEzeuUGrxQNyV1VYXMbNld5WBUP7as=" alt=""><h1>الجدول</h1></a>
+  
+  <a href="tel:+201123961290" class="container"><img src="https://media.istockphoto.com/id/1485520849/photo/computer-monitor-and-social-media-icons.jpg?s=612x612&w=0&k=20&c=pycfo_0aXgh34O8Xb95GdyqVo6TUpbkXFhz5tzaYQYg=" alt=""><h1>تواصل مع المعلم </h1></a>
+</div>
+
+  <div class="bottom-menu">
+    <i class="fa fa-home" style="color: rgb(156, 131, 97);" onclick="window.location.href='home.html'"></i>
+    <i class="fa fa-user" style="color: orange;" onclick="window.location.href='user.html'"></i>
+    <i class="fa fa-blog" style="color: green;" onclick="window.location.href='blog.html'"></i>
+    <i class="fa fa-sign-out" style="color:red;" onclick="window.location.href='start.html'"></i>
+  </div>
+    <script>
+     // استرجاع بيانات الطالب من localStorage
+        const studentData = JSON.parse(localStorage.getItem('studentData'));
+
+        // التحقق من وجود بيانات الطالب
+        if (studentData) {
+            document.getElementById('studentName').textContent = studentData.name;
+            document.getElementById('studentGrade').textContent = ` ${studentData.grade}`;
+            document.getElementById('studentAge').textContent = `العمر: ${studentData.age}`;
+            document.getElementById('studentInfo').textContent = `معلومات إضافية: ${studentData.info}`;
+        } else {
+            // إعادة التوجيه إلى صفحة إدخال الكود إذا لم تكن هناك بيانات
+            window.location.href = 'code.html';
+        }
+    </script>
+</body>
+</html>

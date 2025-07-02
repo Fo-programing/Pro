@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بطاقة الطالب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --danger-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: white;
+            height: 100vh;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .back-btn {
+            position: absolute;
+            right: 15px;
+            top: 20px;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #777;
+            overflow: hidden;
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .section {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #e9f5ff;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            font-size: 18px;
+        }
+        
+        .section-content {
+            flex: 1;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 3px;
+        }
+        
+        .section-value {
+            font-size: 18px;
+            font-weight: 500;
+            color: #222;
+        }
+        
+        .rating {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .footer-btn i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .footer-btn.active {
+            color: var(--primary-color);
+        }
+        
+        .fee-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px dashed #eee;
+        }
+        
+        .fee-amount {
+            font-weight: bold;
+            color: var(--danger-color);
+            font-size: 18px;
+        }
+        
+        .success-badge {
+            background-color: #e6f7ee;
+            color: #00a854;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Section -->
+        <div class="header">
+            <a href="home.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="profile-img">
+                <i class="fas fa-user"></i>
+            </div>
+            <div><strong id="studentName"></strong></div>
+        <div><strong id="studentGrade"></strong></div>
+        </div>
+        
+        <!-- Student Info Sections -->
+        <div class="section">
+            <div class="icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="section-content">
+                <div class="section-title">الصف الدراسي</div>
+                <div class="section-value"><strong id="studentMain"></strong></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="icon">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="section-content">
+                <div class="section-title">العنوان</div>
+                <div class="section-value"> ميت ابو علي</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="section-content">
+                <div class="section-title">تقدير الشهر</div>
+                <div class="section-value">
+                    <span class="success-badge">        <div><strong id="studentInfo"></strong></div></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="section-content">
+                <div class="section-title">موعد الدرس</div>
+                <div class="section-value"><a href="page7.html">Show</a></div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <div class="section-content">
+                <div class="section-title">مصاريف الدرس</div>
+                <div class="section-value"></div>
+                <div class="fee-container">
+                    <span>الدفع الشهري</span>
+                    <span class="fee-amount"><a href="mony.html">Show</a></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer Navigation -->
+        <div class="footer">
+            <a href="home.html" class="footer-btn active">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="blog.html" class="footer-btn">
+                <i class="fas fa-blog"></i>
+                <span>مدونه</span>
+            </a>
+            
+            <a href="setting.html" class="footer-btn">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+        // يمكنك إضافة التفاعلات هنا
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('التطبيق جاهز');
+            
+            // مثال على تفاعل مع الأزرار
+            const footerBtns = document.querySelectorAll('.footer-btn');
+            footerBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    footerBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+       // استرجاع بيانات الطالب من localStorage
+const studentData = JSON.parse(localStorage.getItem('studentData'));
+
+// التحقق من وجود بيانات الطالب
+if (studentData) {
+    document.getElementById('studentName').textContent = studentData.name;
+    document.getElementById('studentGrade').textContent = ` ${studentData.grade}`;
+    document.getElementById('studentMain').textContent = ` ${studentData.main}`;
+    document.getElementById('studentInfo').textContent = studentData.info; // <-- هذا هو التعديل الصحيح
+} else {
+    // إعادة التوجيه إلى صفحة إدخال الكود إذا لم تكن هناك بيانات
+    window.location.href = 'code.html';
+}
+
+    </script>
+</body>
+</html>
