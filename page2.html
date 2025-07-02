@@ -13,7 +13,7 @@
       padding: 0;
     }
 
-   header {
+    header {
       background-color: #4a90e2;
       color: white;
       padding: 15px 20px;
@@ -104,45 +104,52 @@
     <div id="attendanceList"></div>
   </div>
 
-  <script src="students.json"></script>
   <script>
     const studentId = localStorage.getItem("studentId");
-    const student = students[studentId];
-
     const studentNameEl = document.getElementById("studentName");
     const attendanceList = document.getElementById("attendanceList");
 
-    if (student) {
-      studentNameEl.textContent = student.name;
+    fetch("students.json")
+      .then(response => response.json())
+      .then(students => {
+        const student = students[studentId];
 
-      for (const [day, status] of Object.entries(student.attendance)) {
-        const card = document.createElement("div");
-        card.className = "day-card";
+        if (student) {
+          studentNameEl.textContent = student.name;
 
-        const dayLabel = document.createElement("div");
-        dayLabel.textContent = day;
+          for (const [day, status] of Object.entries(student.attendance || {})) {
+            const card = document.createElement("div");
+            card.className = "day-card";
 
-        const statusEl = document.createElement("div");
-        statusEl.className = "status";
+            const dayLabel = document.createElement("div");
+            dayLabel.textContent = day;
 
-        if (status === "حاضر") {
-          statusEl.textContent = "✔️ حاضر";
-          statusEl.classList.add("present");
-        } else if (status === "غائب") {
-          statusEl.textContent = "❌ غائب";
-          statusEl.classList.add("absent");
+            const statusEl = document.createElement("div");
+            statusEl.className = "status";
+
+            if (status === "حاضر") {
+              statusEl.textContent = "✔️ حاضر";
+              statusEl.classList.add("present");
+            } else if (status === "غائب") {
+              statusEl.textContent = "❌ غائب";
+              statusEl.classList.add("absent");
+            } else {
+              statusEl.textContent = "-";
+              statusEl.classList.add("no-status");
+            }
+
+            card.appendChild(dayLabel);
+            card.appendChild(statusEl);
+            attendanceList.appendChild(card);
+          }
         } else {
-          statusEl.textContent = "-";
-          statusEl.classList.add("no-status");
+          studentNameEl.textContent = "بيانات الطالب غير موجودة.";
         }
-
-        card.appendChild(dayLabel);
-        card.appendChild(statusEl);
-        attendanceList.appendChild(card);
-      }
-    } else {
-      studentNameEl.textContent = "بيانات الطالب غير موجودة.";
-    }
+      })
+      .catch(error => {
+        studentNameEl.textContent = "خطأ أثناء تحميل البيانات.";
+        console.error("فشل تحميل students.json:", error);
+      });
   </script>
 
 </body>
