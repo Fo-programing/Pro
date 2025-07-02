@@ -11,7 +11,8 @@
       max-width: 600px;
       margin: auto;
     }
- header {
+
+    header {
       background-color: #4a90e2;
       color: white;
       padding: 15px 20px;
@@ -36,6 +37,7 @@
       cursor: pointer;
       text-decoration: none;
     }
+
     h2 {
       color: #0077b6;
       margin-bottom: 20px;
@@ -73,7 +75,7 @@
   </style>
 </head>
 <body>
-<header>
+  <header>
     واجهة مصاريف الشهر 
     <a class="back-btn" href="home.html">الرجوع</a>
   </header>
@@ -89,30 +91,38 @@
     <tbody id="feesTable"></tbody>
   </table>
 
-  <script src="students.json"></script>
   <script>
-    const studentId = localStorage.getItem('studentId'); // ← تلقائي من التسجيل
-    const student = students[studentId];
-
+    const studentId = localStorage.getItem('studentId');
     const nameEl = document.getElementById('studentName');
     const feesTable = document.getElementById('feesTable');
 
-    if (student) {
-      nameEl.textContent = `الاسم: ${student.name}`;
+    fetch('students.json')
+      .then(response => response.json())
+      .then(students => {
+        const student = students[studentId];
 
-      const fees = student.fees || {};
-      for (const [month, paid] of Object.entries(fees)) {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${month}</td>
-          <td class="${paid ? 'paid' : 'unpaid'}">${paid ? '✔ مدفوع' : '✖ غير مدفوع'}</td>
-        `;
-        feesTable.appendChild(row);
-      }
-    } else {
-      nameEl.textContent = "لم يتم العثور على بيانات الطالب.";
-    }
+        if (student) {
+          nameEl.textContent = `الاسم: ${student.name}`;
+
+          const fees = student.fees || {};
+          for (const [month, paid] of Object.entries(fees)) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${month}</td>
+              <td class="${paid ? 'paid' : 'unpaid'}">
+                ${paid ? '✔ مدفوع' : '✖ غير مدفوع'}
+              </td>
+            `;
+            feesTable.appendChild(row);
+          }
+        } else {
+          nameEl.textContent = "لم يتم العثور على بيانات الطالب.";
+        }
+      })
+      .catch(error => {
+        nameEl.textContent = "حدث خطأ أثناء تحميل البيانات.";
+        console.error('خطأ في تحميل students.json:', error);
+      });
   </script>
-
 </body>
 </html>
