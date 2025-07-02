@@ -67,8 +67,8 @@
       transform: translateY(-2px);
     }
   </style>
+
   <script>
-    // التحقق من إذا كان المستخدم مسجل مسبقًا
     const existingStudent = localStorage.getItem('studentData');
     if (existingStudent) {
       window.location.href = 'home.html';
@@ -90,22 +90,11 @@
   <script>
     function verifyCode() {
       const code = document.getElementById('codeInput').value.trim();
-      const phone = document.getElementById('phoneInput').value.trim();
-
-      if (!/^01[0-9]{9}$/.test(phone)) {
-        alert('رقم الهاتف يجب أن يكون 11 رقماً ويبدأ بـ 01');
-        return;
-      }
-
       if (students[code]) {
         const student = students[code];
-        if (student.phone === phone) {
-          localStorage.setItem('studentData', JSON.stringify(student));
-          localStorage.setItem('studentId', code);
-          window.location.href = 'home.html';
-        } else {
-          alert('رقم الهاتف غير صحيح!');
-        }
+        localStorage.setItem('studentData', JSON.stringify(student));
+        localStorage.setItem('studentId', code);
+        window.location.href = 'home.html';
       } else {
         alert('الكود غير صحيح! الرجاء المحاولة مرة أخرى.');
       }
